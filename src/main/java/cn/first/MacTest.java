@@ -13,7 +13,6 @@ public class MacTest {
             while (networks.hasMoreElements()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 NetworkInterface network = networks.nextElement();
-                if (network != null) {
                     byte[] macAddr = network.getHardwareAddress();
                     if (macAddr != null) {
                         for (int i = 0; i < macAddr.length; i++) {
@@ -22,7 +21,7 @@ public class MacTest {
                         list.add(stringBuilder.toString());
                     }
                 }
-            }
+
             return list;
         } catch (Exception e) {
             throw new RuntimeException("get mac addr error", e);
@@ -30,6 +29,8 @@ public class MacTest {
     }
 
     public static void main(String[] args) {
+
         System.out.println(getMacAddr());
+        System.out.println();
     }
 }
