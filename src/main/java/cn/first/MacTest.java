@@ -3,6 +3,7 @@ package cn.first;
 import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 
 public class MacTest {
@@ -13,6 +14,7 @@ public class MacTest {
             while (networks.hasMoreElements()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 NetworkInterface network = networks.nextElement();
+
                     byte[] macAddr = network.getHardwareAddress();
                     if (macAddr != null) {
                         for (int i = 0; i < macAddr.length; i++) {
@@ -21,7 +23,13 @@ public class MacTest {
                         list.add(stringBuilder.toString());
                     }
                 }
-
+            Iterator<String> listIter = list.iterator();
+            while (listIter.hasNext()){
+                String e = listIter.next();
+                if (e.equals("00-00-00-00-00-00-00-E0")){
+                    listIter.remove();
+                }
+            }
             return list;
         } catch (Exception e) {
             throw new RuntimeException("get mac addr error", e);
