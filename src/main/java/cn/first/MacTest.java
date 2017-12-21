@@ -23,13 +23,7 @@ public class MacTest {
                         list.add(stringBuilder.toString());
                     }
                 }
-            Iterator<String> listIter = list.iterator();
-            while (listIter.hasNext()){
-                String e = listIter.next();
-                if (e.equals("00-00-00-00-00-00-00-E0")){
-                    listIter.remove();
-                }
-            }
+            list.removeIf(e -> e.equals("00-00-00-00-00-00-00-E0"));
             return list;
         } catch (Exception e) {
             throw new RuntimeException("get mac addr error", e);
