@@ -23,7 +23,7 @@ public class Volatile implements Runnable {
         while (sc.hasNext()) {
             String value = sc.next();
             if (value.equals("1")) {
-                new Thread(() -> aVolitle.stopThread()).start();
+                new Thread(aVolitle::stopThread).start();
                 break;
             }
         }
