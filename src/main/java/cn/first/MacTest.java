@@ -1,5 +1,6 @@
 package cn.first;
 
+import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -13,14 +14,14 @@ public class MacTest {
             while (networks.hasMoreElements()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 NetworkInterface network = networks.nextElement();
-                    byte[] macAddr = network.getHardwareAddress();
-                    if (macAddr != null) {
-                        for (int i = 0; i < macAddr.length; i++) {
-                            stringBuilder.append(String.format("%02X%s", macAddr[i], (i < macAddr.length - 1) ? "-" : ""));
-                        }
-                        list.add(stringBuilder.toString());
+                byte[] macAddr = network.getHardwareAddress();
+                if (macAddr != null) {
+                    for (int i = 0; i < macAddr.length; i++) {
+                        stringBuilder.append(String.format("%02X%s", macAddr[i], (i < macAddr.length - 1) ? "-" : ""));
                     }
+                    list.add(stringBuilder.toString());
                 }
+            }
 
             return list;
         } catch (Exception e) {
@@ -30,7 +31,24 @@ public class MacTest {
 
     public static void main(String[] args) {
 
-        System.out.println(getMacAddr());
+        System.out.println(getCurrentMac());
         System.out.println();
+    }
+
+    public static String getCurrentMac() {
+        try {
+            InetAddress inetAddress = InetAddress.getLocalHost();
+            NetworkInterface networkInterface = NetworkInterface.getByInetAddress(inetAddress);
+            StringBuilder stringBuilder = new StringBuilder();
+            byte[] macAddr = networkInterface.getHardwareAddress();
+            if (macAddr != null) {
+                for (int i = 0; i < macAddr.length; i++) {
+                    stringBuilder.append(String.format("%02X%s", macAddr[i], (i < macAddr.length - 1) ? "-" : ""));
+                }
+            }
+            return stringBuilder.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("get mac address error", e);
+        }
     }
 }
